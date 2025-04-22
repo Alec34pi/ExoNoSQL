@@ -1,25 +1,65 @@
-Comment faire fonctionner le tout : 
+# Mise en place du projet Mongo Replica + Intégration Python
 
-aller dans standalone faire un docker-compose up -d
-faire pareil dans replicaset
+## Lancement des services
 
-faire un docker exec -it mongo1 mongosh
+1. **Démarrer l'instance standalone :**  
+   ```bash
+   cd standalone
+   docker-compose up -d
+   ```
 
-faire 
-rs.initiate({
-  _id: "rs0",
-  members: [
-    { _id: 0, host: "mongo1:27017" },
-    { _id: 1, host: "mongo2:27017" },
-    { _id: 2, host: "mongo3:27017" }
-  ]
-});
+2. **Démarrer le replicaset :**  
+   ```bash
+   cd ../replicaset
+   docker-compose up -d
+   ```
 
+---
 
-puis rs.status() pour verifier que ça a bien fonctionner 
+## Initialisation du Replica Set
 
-puis dans integrations faire un python app.py
+3. **Se connecter au container Mongo principal :**  
+   ```bash
+   docker exec -it mongo1 mongosh
+   ```
 
-Un doute ? docs/rapport.md (❁´◡`❁)
+4. **Lancer l'initialisation du replica set :**  
+   ```javascript
+   rs.initiate({
+     _id: "rs0",
+     members: [
+       { _id: 0, host: "mongo1:27017" },
+       { _id: 1, host: "mongo2:27017" },
+       { _id: 2, host: "mongo3:27017" }
+     ]
+   })
+   ```
 
-Je suis sur windows, bonne chance sur Linux ❤️
+5. **Vérifier que tout fonctionne correctement :**  
+   ```javascript
+   rs.status()
+   ```
+
+---
+
+## Lancer l’intégration Python
+
+6. **Exécuter l’application :**  
+   ```bash
+   cd ../integrations
+   python app.py
+   ```
+
+---
+
+## En cas de doute
+
+Va jeter un œil ici :  
+`docs/rapport.md` (❁´◡`❁)
+
+---
+
+## Petit mot de la fin
+
+Testé sur Windows, bonne chance sur Linux ❤️  
+(et que la force du `rs.status()` soit avec toi)
