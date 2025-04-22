@@ -20,6 +20,6 @@ puis rs.status() pour verifier que ça a bien fonctionner
 
 puis dans integrations faire un python app.py
 
-
+Un doute ? docs/rapport.md (❁´◡`❁)
 
 Je suis sur windows, bonne chance sur Linux ❤️
